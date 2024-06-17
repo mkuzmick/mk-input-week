@@ -11,21 +11,20 @@ const Home: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    console.log('useEffect triggered');
     audioRef.current = new Audio("/sounds/bane_your_punishment.m4a");
 
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() === 'l') {
+        console.log('playing sound')
         playSound();
       }
     };
 
     const handleMIDIMessage = (message: WebMidi.MIDIMessageEvent) => {
       const [command, note, velocity] = message.data;
+      console.log(message.data);
 
-      // MIDI note on message for middle C (60) with velocity > 0 (note pressed)
-      if (command === 144 && note === 60 && velocity > 0) {
-        playSound();
-      }
     };
 
     // Set up MIDI access and handling
